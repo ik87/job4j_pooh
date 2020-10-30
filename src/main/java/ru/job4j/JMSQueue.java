@@ -10,8 +10,8 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
- *
  * Simple implementation async point-to-point (p2p) model.
  * Handling queue JMS
  *
@@ -57,7 +57,8 @@ public class JMSQueue implements RequestResponseHandler {
 
     /**
      * Put new json in queue
-     * @param key theme new queue message
+     *
+     * @param key         theme new queue message
      * @param entityQueue entity that will mapping with theme and put in queue theme
      */
     private void putMessageInQueue(String key, EntityQueue entityQueue) {
@@ -69,6 +70,7 @@ public class JMSQueue implements RequestResponseHandler {
             queue.get(key).offer(entityQueue);
         }
     }
+
     /**
      * Check suitable json before parse
      *
@@ -87,6 +89,7 @@ public class JMSQueue implements RequestResponseHandler {
 
     /**
      * Get entity from queue after that the entity transforms to json
+     *
      * @param in header
      * @return json
      */
@@ -96,9 +99,6 @@ public class JMSQueue implements RequestResponseHandler {
         EntityQueue msg = queue.containsKey(path) ? queue.get(path).remove() : null;
         if (msg != null) {
             json = new Gson().toJson(msg);
-            if (queue.get(path).isEmpty()) {
-                queue.remove(path);
-            }
         }
         return json;
     }
